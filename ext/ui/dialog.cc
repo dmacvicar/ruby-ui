@@ -74,6 +74,24 @@ is_open(VALUE self)
     return ptr->isOpen() ? Qtrue : Qfalse;
 }
 
+/*
+ * @return [Boolean] true if dialog is the topmost dialot
+ */
+static VALUE
+is_topmost_dialog(VALUE self)
+{    
+    YDialog *ptr = ui_unwrap_dialog(self);
+    return ptr->isTopmostDialog() ? Qtrue : Qfalse;
+}
+
+static VALUE
+set_initial_size(VALUE self)
+{    
+    YDialog *ptr = ui_unwrap_dialog(self);
+    ptr->setInitialSize();
+    return self;
+}
+
 static VALUE
 wait_for_event(VALUE self)
 {
@@ -95,6 +113,8 @@ void init_ui_dialog()
   rb_define_method(klass, "destroy!", RUBY_METHOD_FUNC(destroy), 0);
   rb_define_method(klass, "open", RUBY_METHOD_FUNC(open), 0);
   rb_define_method(klass, "open?", RUBY_METHOD_FUNC(is_open), 0);
+  rb_define_method(klass, "topmost_dialog?", RUBY_METHOD_FUNC(is_topmost_dialog), 0);
+  rb_define_method(klass, "set_initial_size", RUBY_METHOD_FUNC(set_initial_size), 0);
 
 }
 
