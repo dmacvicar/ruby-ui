@@ -70,6 +70,12 @@ beep(VALUE self)
   return Qnil;
 }
 
+static VALUE
+is_text_mode(VALUE self)
+{
+  return YUI::app()->isTextMode() ? Qtrue : Qfalse;
+}
+
 extern VALUE widgetObjectMap;
 
 /*  
@@ -92,6 +98,7 @@ void Init_ui() {
   rb_define_singleton_method(mUI, "busy_cursor", RUBY_METHOD_FUNC(busy_cursor), 0);
   rb_define_singleton_method(mUI, "normal_cursor", RUBY_METHOD_FUNC(normal_cursor), 0);
   rb_define_singleton_method(mUI, "beep", RUBY_METHOD_FUNC(beep), 0);
+  rb_define_singleton_method(mUI, "text_mode?", RUBY_METHOD_FUNC(is_text_mode), 0);
 
   init_ui_widget();
   init_ui_dialog();

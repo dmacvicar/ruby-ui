@@ -71,4 +71,10 @@ module UI
   # Beep!
   #
 
+  #
+  # @!method self.text_mode?
+  #
+  # @return [Boolean] true if the UI is running in text mode
+  #
+
 end
