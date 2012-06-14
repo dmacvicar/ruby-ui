@@ -206,6 +206,22 @@ set_property(VALUE self, VALUE id, VALUE value)
     return response;
 }
 
+/*
+ * Traverse up the widget hierarchy and find the dialog this widget belongs
+ * to.
+ * @return [Dialog] the dialog or +nil+ if there is none
+ */
+VALUE
+find_dialog(VALUE self) {
+  YWidget *ptr = ui_unwrap_widget(self);
+  YDialog *dlg = ptr->findDialog();
+
+  if (!dlg) return Qnil;
+
+  VALUE rb_dlg = widget_object_map_for(dlg);
+  return rb_dlg;
+}
+
 VALUE cUIWidget;
 void init_ui_widget()
 {
@@ -224,5 +240,6 @@ void init_ui_widget()
   rb_define_method(klass, "[]", RUBY_METHOD_FUNC(get_property), 1);
   rb_define_method(klass, "[]=", RUBY_METHOD_FUNC(set_property), 2);
   rb_define_method(klass, "properties", RUBY_METHOD_FUNC(get_properties), 0);
+  rb_define_method(klass, "find_dialog", RUBY_METHOD_FUNC(find_dialog), 0);
 }
 

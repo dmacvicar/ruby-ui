@@ -65,4 +65,22 @@ class WidgetTest < Test::Unit::TestCase
     assert !@dialog[:Enabled]
   end
 
+  def test_children_are_invalidated
+    dialog = UI.main_dialog {
+      vbox(:id => :vbox1) {
+        push_button "Ok", :id => :btn1
+      }
+    }
+    btn = dialog.find_widget(:btn1)
+    assert_not_nil btn
+    dialog.destroy!
+    assert_raise RuntimeError do
+      btn.id
+    end
+  end
+
+  def test_find_dialog
+    assert_equal @dialog, @btn.find_dialog
+  end
+
 end
